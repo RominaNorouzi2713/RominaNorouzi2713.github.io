@@ -6,233 +6,290 @@
   <title>Romina Norouzi</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #f4f0e8;
-      color: #121212;
+      background: #f7fbff;
+      color: #2d3035;
+      overflow-x: hidden;
+    }
+
+    #moleculeCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(120deg, #ffffff 0%, #f4faff 45%, #eef7ff 100%);
     }
 
     header {
-      width: 100%;
-      padding: 28px 56px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #d3cabc;
-      position: sticky;
-      top: 0;
-      background: #f4f0e8;
-      z-index: 10;
     }
 
     .logo {
+      font-family: Georgia, serif;
+      font-style: italic;
       font-size: 22px;
       font-weight: 700;
-      letter-spacing: -0.5px;
+      letter-spacing: 0.5px;
     }
 
     nav a {
-      color: #121212;
+      margin-left: 28px;
       text-decoration: none;
-      margin-left: 26px;
-      font-size: 15px;
+      color: #4b4f56;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
 
     nav a:hover {
-      text-decoration: underline;
+      color: #1b6ca8;
+      border-bottom: 2px solid #1b6ca8;
+      padding-bottom: 5px;
     }
 
     .hero {
-      min-height: 82vh;
+      max-width: 1120px;
+      min-height: 720px;
+      margin: 0 auto;
+      padding: 110px 28px 60px;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 70px;
       align-items: center;
-      padding: 80px 56px;
     }
 
-    .big-title {
-      font-size: 88px;
-      line-height: 0.92;
-      letter-spacing: -4px;
-      margin: 0;
-      font-weight: 800;
+    .hero h1 {
+      font-size: 68px;
+      line-height: 0.95;
+      margin: 0 0 38px;
+      letter-spacing: -3px;
+      color: #34383d;
     }
 
-    .small-label {
+    .label {
+      color: #1b6ca8;
       font-size: 12px;
-      letter-spacing: 2.2px;
-      color: #6c665f;
-      font-weight: 700;
+      font-weight: 800;
+      letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 18px;
     }
 
     .abstract {
-      font-size: 19px;
-      line-height: 1.8;
-      max-width: 580px;
-      margin-bottom: 46px;
+      font-size: 18px;
+      line-height: 1.75;
+      color: #6a6e75;
+      max-width: 540px;
     }
 
-    .info-grid {
+    .info-panel {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 34px 48px;
+      border: 1px solid #d9e2ea;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.76);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 12px 40px rgba(54, 93, 125, 0.08);
     }
 
-    .info-item h4 {
-      margin: 0 0 8px 0;
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: #6c665f;
+    .info-box {
+      padding: 28px;
+      border-bottom: 1px solid #d9e2ea;
+      border-right: 1px solid #d9e2ea;
+      min-height: 110px;
+    }
+
+    .info-box:nth-child(2),
+    .info-box:nth-child(4) {
+      border-right: none;
+    }
+
+    .info-box:nth-child(3),
+    .info-box:nth-child(4) {
+      border-bottom: none;
+    }
+
+    .info-box h4 {
+      margin: 0 0 16px;
+      color: #1b6ca8;
+      font-size: 11px;
+      letter-spacing: 1.6px;
       text-transform: uppercase;
     }
 
-    .info-item p {
+    .info-box p {
       margin: 0;
-      font-size: 17px;
+      color: #34383d;
+      font-size: 15px;
       font-weight: 700;
       text-transform: uppercase;
+      line-height: 1.5;
+    }
+
+    .buttons {
+      margin-top: 22px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 16px;
+      border: 1px solid #cbd8e3;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.85);
+      color: #1b6ca8;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
     }
 
     section {
-      padding: 80px 56px;
-      border-top: 1px solid #d3cabc;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 72px 28px;
     }
 
-    section h2 {
-      font-size: 46px;
-      letter-spacing: -1.5px;
-      margin: 0 0 32px 0;
+    .section-title {
+      font-size: 34px;
+      margin: 0 0 18px;
+      color: #34383d;
+      letter-spacing: -1px;
     }
 
-    .about-text {
-      font-size: 19px;
-      line-height: 1.8;
-      max-width: 860px;
+    .section-text {
+      max-width: 780px;
+      font-size: 18px;
+      line-height: 1.75;
+      color: #6a6e75;
+    }
+
+    .divider {
+      height: 1px;
+      background: #d9e2ea;
+      max-width: 1120px;
+      margin: 0 auto;
     }
 
     .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 26px;
+      gap: 24px;
+      margin-top: 34px;
     }
 
     .card {
-      background: #fffaf2;
-      border: 1px solid #d3cabc;
-      padding: 30px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid #d9e2ea;
+      padding: 28px;
       min-height: 230px;
+      box-shadow: 0 10px 35px rgba(54, 93, 125, 0.06);
     }
 
-    .number {
-      font-size: 13px;
+    .card .num {
+      color: #1b6ca8;
+      font-size: 12px;
       letter-spacing: 2px;
-      color: #6c665f;
-      font-weight: 700;
-      margin-bottom: 26px;
+      font-weight: 800;
+      margin-bottom: 22px;
     }
 
     .card h3 {
-      font-size: 24px;
-      margin: 0 0 16px 0;
-      letter-spacing: -0.5px;
+      margin: 0 0 14px;
+      font-size: 21px;
+      color: #34383d;
     }
 
     .card p {
-      font-size: 16px;
-      line-height: 1.7;
       margin: 0;
-    }
-
-    .pub-list {
-      max-width: 900px;
-    }
-
-    .pub {
-      padding: 22px 0;
-      border-bottom: 1px solid #d3cabc;
-      font-size: 17px;
+      color: #6a6e75;
       line-height: 1.7;
+      font-size: 16px;
     }
 
-    .contact-box {
-      font-size: 18px;
-      line-height: 1.8;
+    .publication {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid #d9e2ea;
+      padding: 24px;
+      margin-top: 18px;
+      line-height: 1.7;
+      color: #5f646b;
+    }
+
+    .publication strong {
+      color: #34383d;
     }
 
     footer {
-      padding: 34px 56px;
-      border-top: 1px solid #d3cabc;
-      color: #6c665f;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 38px 28px;
+      color: #777;
       font-size: 14px;
     }
 
     @media (max-width: 850px) {
       header {
-        padding: 22px;
         display: block;
       }
 
       nav {
-        margin-top: 18px;
+        margin-top: 20px;
       }
 
       nav a {
-        margin-left: 0;
-        margin-right: 16px;
         display: inline-block;
-        margin-bottom: 8px;
+        margin: 0 14px 10px 0;
       }
 
       .hero {
         grid-template-columns: 1fr;
-        padding: 62px 22px;
-        gap: 40px;
+        padding-top: 70px;
       }
 
-      .big-title {
-        font-size: 52px;
-        letter-spacing: -2px;
+      .hero h1 {
+        font-size: 46px;
       }
 
-      .info-grid {
+      .info-panel {
         grid-template-columns: 1fr;
       }
 
-      section {
-        padding: 62px 22px;
-      }
-
-      section h2 {
-        font-size: 34px;
+      .info-box,
+      .info-box:nth-child(2),
+      .info-box:nth-child(3),
+      .info-box:nth-child(4) {
+        border-right: none;
+        border-bottom: 1px solid #d9e2ea;
       }
 
       .cards {
         grid-template-columns: 1fr;
-      }
-
-      footer {
-        padding: 30px 22px;
       }
     }
   </style>
 </head>
 
 <body>
+  <canvas id="moleculeCanvas"></canvas>
 
   <header>
-    <div class="logo">Romina Norouzi</div>
+    <div class="logo">ROMINA NOROUZI</div>
     <nav>
       <a href="#home">Home</a>
       <a href="#about">About</a>
@@ -244,123 +301,211 @@
 
   <main class="hero" id="home">
     <div>
-      <h1 class="big-title">
-        RESEARCH<br>
-        SCIENCE<br>
-        DISCOVERY
+      <h1>
+        COMPUTATIONAL<br>
+        DRUG DESIGN<br>
+        MOLECULAR<br>
+        GENERATION
       </h1>
+
+      <div class="label">Abstract</div>
+      <p class="abstract">
+        I am Romina Norouzi, a Ph.D. researcher in Bioinformatics at the University of Tehran.
+        My work focuses on AI-driven computational drug design, cheminformatics,
+        molecular generation, and deep learning methods for discovering therapeutic candidates.
+      </p>
     </div>
 
     <div>
-      <div class="small-label">Abstract</div>
-      <p class="abstract">
-        I am Romina Norouzi. My academic interests focus on scientific research,
-        interdisciplinary discovery, and the development of ideas that connect
-        knowledge, innovation, and real-world impact.
-      </p>
-
-      <div class="info-grid">
-        <div class="info-item">
+      <div class="info-panel">
+        <div class="info-box">
           <h4>Location</h4>
-          <p>Your City</p>
+          <p>Tehran, Iran</p>
         </div>
 
-        <div class="info-item">
+        <div class="info-box">
           <h4>Institute</h4>
-          <p>Your University</p>
+          <p>University of Tehran</p>
         </div>
 
-        <div class="info-item">
+        <div class="info-box">
           <h4>Focus</h4>
-          <p>Your Field</p>
+          <p>AI for Drug Discovery</p>
         </div>
 
-        <div class="info-item">
+        <div class="info-box">
           <h4>Specialization</h4>
-          <p>Your Topic</p>
+          <p>Molecular Generation</p>
         </div>
+      </div>
+
+      <div class="buttons">
+        <a class="btn" href="https://scholar.google.com/citations?user=3Hrx_gcAAAAJ&hl=en" target="_blank">Google Scholar</a>
+        <a class="btn" href="https://github.com/RominaNorouzi2713" target="_blank">GitHub</a>
+        <a class="btn" href="#contact">Contact</a>
       </div>
     </div>
   </main>
 
+  <div class="divider"></div>
+
   <section id="about">
-    <div class="small-label">About</div>
-    <h2>About Me</h2>
-    <p class="about-text">
-      Write your biography here. You can include your education, university,
-      research interests, academic background, work experience, and future goals.
-      This section should explain who you are and what kind of work you do.
+    <div class="label">About</div>
+    <h2 class="section-title">About Me</h2>
+    <p class="section-text">
+      I work at the intersection of bioinformatics, cheminformatics, artificial intelligence,
+      and drug discovery. My research explores how generative models, molecular representations,
+      and deep learning architectures can accelerate the design, optimization, and prioritization
+      of drug-like molecules.
     </p>
   </section>
 
+  <div class="divider"></div>
+
   <section id="research">
-    <div class="small-label">Research Dimensions</div>
-    <h2>Research Interests</h2>
+    <div class="label">Scientific Dimensions</div>
+    <h2 class="section-title">Research Interests</h2>
 
     <div class="cards">
       <div class="card">
-        <div class="number">0 1 // RESEARCH</div>
-        <h3>Research Area One</h3>
+        <div class="num">01 // MOLECULAR GENERATION</div>
+        <h3>Generative AI for Molecules</h3>
         <p>
-          Describe your first research area here. For example: artificial intelligence,
-          biology, pharmacology, law, public health, or another academic field.
+          Designing novel drug-like molecules using deep generative models, SMILES-based
+          architectures, transformers, and representation learning.
         </p>
       </div>
 
       <div class="card">
-        <div class="number">0 2 // SCIENCE</div>
-        <h3>Research Area Two</h3>
+        <div class="num">02 // DRUG DESIGN</div>
+        <h3>Computational Drug Design</h3>
         <p>
-          Describe your second research area here. Explain the questions, methods,
-          or topics that are important in your work.
+          Applying machine learning, cheminformatics, docking analysis, and predictive modeling
+          to support rational therapeutic discovery.
         </p>
       </div>
 
       <div class="card">
-        <div class="number">0 3 // PROJECTS</div>
-        <h3>Projects</h3>
+        <div class="num">03 // BIOINFORMATICS</div>
+        <h3>AI for Biomedical Discovery</h3>
         <p>
-          Add your academic projects, professional work, software, publications,
-          or collaborations in this section.
+          Developing computational frameworks for bioactivity prediction, multi-target design,
+          low-data drug discovery, and biomedical decision-making.
         </p>
       </div>
     </div>
   </section>
+
+  <div class="divider"></div>
 
   <section id="publications">
-    <div class="small-label">Publications</div>
-    <h2>Selected Publications</h2>
+    <div class="label">Publications</div>
+    <h2 class="section-title">Selected Publications</h2>
 
-    <div class="pub-list">
-      <div class="pub">
-        <strong>Paper Title One.</strong> Author names. Journal or conference name, year.
-      </div>
+    <div class="publication">
+      <strong>MT-ConBiFormer-GPT: multi-target molecular generation for low-data drug discovery via a contrastive BiFormer-GPT architecture and curriculum learning with cross-domain generalization.</strong>
+      <br>
+      Romina Norouzi, Karim Abbasi, Parvin Razzaghi, Sajjad Gharaghani.
+      <br>
+      <em>Briefings in Bioinformatics</em>, 2026.
+    </div>
 
-      <div class="pub">
-        <strong>Paper Title Two.</strong> Author names. Journal or conference name, year.
-      </div>
+    <div class="publication">
+      <strong>Computational Drug Design in the AI Era: A Systematic Review of Molecular Representations, Generative Architectures, and Performance Assessment.</strong>
+      <br>
+      Add full author list and journal details here.
+    </div>
 
-      <div class="pub">
-        <strong>Manuscript in Preparation.</strong> Short description of your current work.
-      </div>
+    <div class="publication">
+      <strong>Additional manuscripts and research projects.</strong>
+      <br>
+      Add more publications, preprints, or manuscripts here.
     </div>
   </section>
 
-  <section id="contact">
-    <div class="small-label">Contact</div>
-    <h2>Contact</h2>
+  <div class="divider"></div>
 
-    <div class="contact-box">
-      <p>Email: your-email@example.com</p>
-      <p>GitHub: RominaNorouzi2713</p>
-      <p>Google Scholar: Add your link here</p>
-      <p>LinkedIn: Add your link here</p>
-    </div>
+  <section id="contact">
+    <div class="label">Contact</div>
+    <h2 class="section-title">Contact</h2>
+    <p class="section-text">
+      Email: add-your-email-here<br>
+      Google Scholar: Romina Norouzi<br>
+      GitHub: RominaNorouzi2713
+    </p>
   </section>
 
   <footer>
-    © 2026 Romina Norouzi
+    © 2026 Romina Norouzi. Computational Drug Design & Molecular Generation.
   </footer>
 
+  <script>
+    const canvas = document.getElementById("moleculeCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let width, height, particles;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      createParticles();
+    }
+
+    function createParticles() {
+      const count = Math.floor((width * height) / 13000);
+      particles = [];
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: (Math.random() - 0.5) * 0.35,
+          r: Math.random() * 2 + 1
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(27, 108, 168, 0.22)";
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j];
+          const dx = p.x - q.x;
+          const dy = p.y - q.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = `rgba(27, 108, 168, ${0.14 * (1 - dist / 130)})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    draw();
+  </script>
 </body>
 </html>
