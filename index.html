@@ -1,511 +1,172 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Romina Norouzi</title>
+<script>
+  const canvas = document.getElementById("moleculeCanvas");
+  const ctx = canvas.getContext("2d");
 
-  <style>
-    * { box-sizing: border-box; }
+  let width, height;
+  let molecules = [];
 
-    html { scroll-behavior: smooth; }
+  function resizeCanvas() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    createMolecules();
+  }
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f7fbff;
-      color: #2d3035;
-      overflow-x: hidden;
+  function rand(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function createHexagon(cx, cy, r, rotation = 0) {
+    const pts = [];
+    for (let i = 0; i < 6; i++) {
+      const a = rotation + (Math.PI * 2 * i) / 6;
+      pts.push({
+        x: cx + Math.cos(a) * r,
+        y: cy + Math.sin(a) * r
+      });
+    }
+    return pts;
+  }
+
+  function createMolecule() {
+    const x = rand(0, width);
+    const y = rand(0, height);
+    const scale = rand(18, 34);
+    const rotation = rand(0, Math.PI * 2);
+
+    const type = Math.floor(rand(0, 3)); 
+    // 0: single ring
+    // 1: double ring
+    // 2: ring with side chain
+
+    return {
+      x,
+      y,
+      scale,
+      rotation,
+      driftX: rand(-0.12, 0.12),
+      driftY: rand(-0.08, 0.08),
+      spin: rand(-0.002, 0.002),
+      type
+    };
+  }
+
+  function createMolecules() {
+    molecules = [];
+    const count = Math.max(10, Math.floor((width * height) / 120000));
+    for (let i = 0; i < count; i++) {
+      molecules.push(createMolecule());
+    }
+  }
+
+  function drawBond(p1, p2, opacity = 0.22) {
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.strokeStyle = `rgba(209, 77, 147, ${opacity})`;
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+  }
+
+  function drawAtom(p, r = 2.2, opacity = 0.32) {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(209, 77, 147, ${opacity})`;
+    ctx.fill();
+  }
+
+  function drawRing(points) {
+    for (let i = 0; i < points.length; i++) {
+      drawBond(points[i], points[(i + 1) % points.length], 0.22);
+    }
+    for (const p of points) {
+      drawAtom(p, 2.2, 0.30);
+    }
+  }
+
+  function shiftPoints(points, dx, dy) {
+    return points.map(p => ({ x: p.x + dx, y: p.y + dy }));
+  }
+
+  function rotatePoint(px, py, cx, cy, angle) {
+    const dx = px - cx;
+    const dy = py - cy;
+    return {
+      x: cx + dx * Math.cos(angle) - dy * Math.sin(angle),
+      y: cy + dx * Math.sin(angle) + dy * Math.cos(angle)
+    };
+  }
+
+  function rotatePoints(points, cx, cy, angle) {
+    return points.map(p => rotatePoint(p.x, p.y, cx, cy, angle));
+  }
+
+  function drawMolecule(m) {
+    const cx = m.x;
+    const cy = m.y;
+    const r = m.scale;
+
+    let ring1 = createHexagon(cx, cy, r, 0);
+    ring1 = rotatePoints(ring1, cx, cy, m.rotation);
+    drawRing(ring1);
+
+    if (m.type === 1) {
+      // double fused-like ring
+      const ring2CenterX = cx + r * 1.55;
+      const ring2CenterY = cy;
+      let ring2 = createHexagon(ring2CenterX, ring2CenterY, r, 0);
+      ring2 = rotatePoints(ring2, cx, cy, m.rotation);
+      drawRing(ring2);
+
+      drawBond(ring1[0], ring2[3], 0.18);
+      drawBond(ring1[5], ring2[2], 0.18);
     }
 
-    #moleculeCanvas {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: linear-gradient(120deg, #ffffff 0%, #f4faff 45%, #eef7ff 100%);
+    if (m.type === 2) {
+      // side chain
+      const attach = ring1[1];
+      const p2 = {
+        x: attach.x + Math.cos(m.rotation + Math.PI / 5) * r * 1.2,
+        y: attach.y + Math.sin(m.rotation + Math.PI / 5) * r * 1.2
+      };
+      const p3 = {
+        x: p2.x + Math.cos(m.rotation - Math.PI / 8) * r * 1.0,
+        y: p2.y + Math.sin(m.rotation - Math.PI / 8) * r * 1.0
+      };
+      const p4 = {
+        x: p3.x + Math.cos(m.rotation + Math.PI / 4) * r * 0.9,
+        y: p3.y + Math.sin(m.rotation + Math.PI / 4) * r * 0.9
+      };
+
+      drawBond(attach, p2, 0.22);
+      drawBond(p2, p3, 0.20);
+      drawBond(p3, p4, 0.18);
+
+      drawAtom(p2, 2.0, 0.28);
+      drawAtom(p3, 2.0, 0.28);
+      drawAtom(p4, 2.0, 0.28);
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (const m of molecules) {
+      m.x += m.driftX;
+      m.y += m.driftY;
+      m.rotation += m.spin;
+
+      if (m.x < -120) m.x = width + 120;
+      if (m.x > width + 120) m.x = -120;
+      if (m.y < -120) m.y = height + 120;
+      if (m.y > height + 120) m.y = -120;
+
+      drawMolecule(m);
     }
 
-    header {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 28px 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-family: Georgia, serif;
-      font-style: italic;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    nav a {
-      margin-left: 28px;
-      text-decoration: none;
-      color: #4b4f56;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    nav a:hover {
-      color: #1b6ca8;
-      border-bottom: 2px solid #1b6ca8;
-      padding-bottom: 5px;
-    }
-
-    .hero {
-      max-width: 1120px;
-      min-height: 720px;
-      margin: 0 auto;
-      padding: 110px 28px 60px;
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 70px;
-      align-items: center;
-    }
-
-    .hero h1 {
-      font-size: 68px;
-      line-height: 0.95;
-      margin: 0 0 38px;
-      letter-spacing: -3px;
-      color: #34383d;
-    }
-
-    .label {
-      color: #1b6ca8;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    .abstract {
-      font-size: 18px;
-      line-height: 1.75;
-      color: #6a6e75;
-      max-width: 540px;
-    }
-
-    .info-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border: 1px solid #d9e2ea;
-      border-radius: 8px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.76);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 12px 40px rgba(54, 93, 125, 0.08);
-    }
-
-    .info-box {
-      padding: 28px;
-      border-bottom: 1px solid #d9e2ea;
-      border-right: 1px solid #d9e2ea;
-      min-height: 110px;
-    }
-
-    .info-box:nth-child(2),
-    .info-box:nth-child(4) {
-      border-right: none;
-    }
-
-    .info-box:nth-child(3),
-    .info-box:nth-child(4) {
-      border-bottom: none;
-    }
-
-    .info-box h4 {
-      margin: 0 0 16px;
-      color: #1b6ca8;
-      font-size: 11px;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-    }
-
-    .info-box p {
-      margin: 0;
-      color: #34383d;
-      font-size: 15px;
-      font-weight: 700;
-      text-transform: uppercase;
-      line-height: 1.5;
-    }
-
-    .buttons {
-      margin-top: 22px;
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 12px 16px;
-      border: 1px solid #cbd8e3;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.85);
-      color: #1b6ca8;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    section {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 72px 28px;
-    }
-
-    .section-title {
-      font-size: 34px;
-      margin: 0 0 18px;
-      color: #34383d;
-      letter-spacing: -1px;
-    }
-
-    .section-text {
-      max-width: 780px;
-      font-size: 18px;
-      line-height: 1.75;
-      color: #6a6e75;
-    }
-
-    .divider {
-      height: 1px;
-      background: #d9e2ea;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 34px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.78);
-      border: 1px solid #d9e2ea;
-      padding: 28px;
-      min-height: 230px;
-      box-shadow: 0 10px 35px rgba(54, 93, 125, 0.06);
-    }
-
-    .card .num {
-      color: #1b6ca8;
-      font-size: 12px;
-      letter-spacing: 2px;
-      font-weight: 800;
-      margin-bottom: 22px;
-    }
-
-    .card h3 {
-      margin: 0 0 14px;
-      font-size: 21px;
-      color: #34383d;
-    }
-
-    .card p {
-      margin: 0;
-      color: #6a6e75;
-      line-height: 1.7;
-      font-size: 16px;
-    }
-
-    .publication {
-      background: rgba(255,255,255,0.78);
-      border: 1px solid #d9e2ea;
-      padding: 24px;
-      margin-top: 18px;
-      line-height: 1.7;
-      color: #5f646b;
-    }
-
-    .publication strong {
-      color: #34383d;
-    }
-
-    footer {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 38px 28px;
-      color: #777;
-      font-size: 14px;
-    }
-
-    @media (max-width: 850px) {
-      header {
-        display: block;
-      }
-
-      nav {
-        margin-top: 20px;
-      }
-
-      nav a {
-        display: inline-block;
-        margin: 0 14px 10px 0;
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-        padding-top: 70px;
-      }
-
-      .hero h1 {
-        font-size: 46px;
-      }
-
-      .info-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .info-box,
-      .info-box:nth-child(2),
-      .info-box:nth-child(3),
-      .info-box:nth-child(4) {
-        border-right: none;
-        border-bottom: 1px solid #d9e2ea;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <canvas id="moleculeCanvas"></canvas>
-
-  <header>
-    <div class="logo">ROMINA NOROUZI</div>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#research">Research</a>
-      <a href="#publications">Publications</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <main class="hero" id="home">
-    <div>
-      <h1>
-        COMPUTATIONAL<br>
-        DRUG DESIGN<br>
-        MOLECULAR<br>
-        GENERATION
-      </h1>
-
-      <div class="label">Abstract</div>
-      <p class="abstract">
-        I am Romina Norouzi, a Ph.D. researcher in Bioinformatics at the University of Tehran.
-        My work focuses on AI-driven computational drug design, cheminformatics,
-        molecular generation, and deep learning methods for discovering therapeutic candidates.
-      </p>
-    </div>
-
-    <div>
-      <div class="info-panel">
-        <div class="info-box">
-          <h4>Location</h4>
-          <p>Tehran, Iran</p>
-        </div>
-
-        <div class="info-box">
-          <h4>Institute</h4>
-          <p>University of Tehran</p>
-        </div>
-
-        <div class="info-box">
-          <h4>Focus</h4>
-          <p>AI for Drug Discovery</p>
-        </div>
-
-        <div class="info-box">
-          <h4>Specialization</h4>
-          <p>Molecular Generation</p>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <a class="btn" href="https://scholar.google.com/citations?user=3Hrx_gcAAAAJ&hl=en" target="_blank">Google Scholar</a>
-        <a class="btn" href="https://github.com/RominaNorouzi2713" target="_blank">GitHub</a>
-        <a class="btn" href="#contact">Contact</a>
-      </div>
-    </div>
-  </main>
-
-  <div class="divider"></div>
-
-  <section id="about">
-    <div class="label">About</div>
-    <h2 class="section-title">About Me</h2>
-    <p class="section-text">
-      I work at the intersection of bioinformatics, cheminformatics, artificial intelligence,
-      and drug discovery. My research explores how generative models, molecular representations,
-      and deep learning architectures can accelerate the design, optimization, and prioritization
-      of drug-like molecules.
-    </p>
-  </section>
-
-  <div class="divider"></div>
-
-  <section id="research">
-    <div class="label">Scientific Dimensions</div>
-    <h2 class="section-title">Research Interests</h2>
-
-    <div class="cards">
-      <div class="card">
-        <div class="num">01 // MOLECULAR GENERATION</div>
-        <h3>Generative AI for Molecules</h3>
-        <p>
-          Designing novel drug-like molecules using deep generative models, SMILES-based
-          architectures, transformers, and representation learning.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="num">02 // DRUG DESIGN</div>
-        <h3>Computational Drug Design</h3>
-        <p>
-          Applying machine learning, cheminformatics, docking analysis, and predictive modeling
-          to support rational therapeutic discovery.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="num">03 // BIOINFORMATICS</div>
-        <h3>AI for Biomedical Discovery</h3>
-        <p>
-          Developing computational frameworks for bioactivity prediction, multi-target design,
-          low-data drug discovery, and biomedical decision-making.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <section id="publications">
-    <div class="label">Publications</div>
-    <h2 class="section-title">Selected Publications</h2>
-
-    <div class="publication">
-      <strong>MT-ConBiFormer-GPT: multi-target molecular generation for low-data drug discovery via a contrastive BiFormer-GPT architecture and curriculum learning with cross-domain generalization.</strong>
-      <br>
-      Romina Norouzi, Karim Abbasi, Parvin Razzaghi, Sajjad Gharaghani.
-      <br>
-      <em>Briefings in Bioinformatics</em>, 2026.
-    </div>
-
-    <div class="publication">
-      <strong>Computational Drug Design in the AI Era: A Systematic Review of Molecular Representations, Generative Architectures, and Performance Assessment.</strong>
-      <br>
-      Add full author list and journal details here.
-    </div>
-
-    <div class="publication">
-      <strong>Additional manuscripts and research projects.</strong>
-      <br>
-      Add more publications, preprints, or manuscripts here.
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <section id="contact">
-    <div class="label">Contact</div>
-    <h2 class="section-title">Contact</h2>
-    <p class="section-text">
-      Email: add-your-email-here<br>
-      Google Scholar: Romina Norouzi<br>
-      GitHub: RominaNorouzi2713
-    </p>
-  </section>
-
-  <footer>
-    © 2026 Romina Norouzi. Computational Drug Design & Molecular Generation.
-  </footer>
-
-  <script>
-    const canvas = document.getElementById("moleculeCanvas");
-    const ctx = canvas.getContext("2d");
-
-    let width, height, particles;
-
-    function resizeCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      createParticles();
-    }
-
-    function createParticles() {
-      const count = Math.floor((width * height) / 13000);
-      particles = [];
-
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          r: Math.random() * 2 + 1
-        });
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, width, height);
-
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(27, 108, 168, 0.22)";
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j];
-          const dx = p.x - q.x;
-          const dy = p.y - q.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(27, 108, 168, ${0.14 * (1 - dist / 130)})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-    draw();
-  </script>
-</body>
-</html>
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+  animate();
+</script>
