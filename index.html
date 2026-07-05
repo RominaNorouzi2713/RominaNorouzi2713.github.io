@@ -6,15 +6,34 @@
   <title>Romina Norouzi</title>
 
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --bg: #fff7fb;
+      --panel: rgba(255, 255, 255, 0.88);
+      --ink: #26313f;
+      --muted: #667085;
+      --soft: #f7e3ee;
+      --line: #ead0dc;
+      --accent: #c23a83;
+      --accent-dark: #8e2d65;
+      --blue: #2d5d7b;
+    }
 
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #fff8fc;
-      color: #2f2a32;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(194, 58, 131, 0.08), transparent 30%),
+        radial-gradient(circle at 85% 10%, rgba(45, 93, 123, 0.08), transparent 28%),
+        linear-gradient(135deg, #fffafd 0%, #fff4fa 45%, #f7fbff 100%);
+      color: var(--ink);
       overflow-x: hidden;
     }
 
@@ -24,93 +43,191 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(120deg, #fffafd 0%, #fff1f8 45%, #fff8fd 100%);
+      opacity: 0.9;
+    }
+
+    a {
+      color: inherit;
     }
 
     header {
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 28px;
+      padding: 30px 30px 16px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
     }
 
     .logo {
-      font-family: Georgia, serif;
-      font-style: italic;
+      font-family: Georgia, "Times New Roman", serif;
       font-size: 22px;
+      font-style: italic;
       font-weight: 700;
-      color: #4a2a3d;
+      letter-spacing: 0.5px;
+      color: #3a2c38;
     }
 
     nav a {
-      margin-left: 28px;
+      margin-left: 32px;
       text-decoration: none;
-      color: #5e4a57;
       font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
+      color: #4d4650;
+      padding-bottom: 7px;
     }
 
     nav a:hover {
-      color: #d14d93;
-      border-bottom: 2px solid #d14d93;
-      padding-bottom: 5px;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
     }
 
     .hero {
-      max-width: 1120px;
-      min-height: 720px;
+      max-width: 1180px;
+      min-height: 760px;
       margin: 0 auto;
-      padding: 90px 28px 50px;
+      padding: 95px 30px 70px;
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
       gap: 70px;
       align-items: center;
     }
 
-    .hero h1 {
-      font-size: 58px;
-      line-height: 1.02;
-      margin: 0 0 36px;
-      letter-spacing: -2.5px;
-      color: #3b3340;
-    }
-
-    .label {
-      color: #d14d93;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--accent-dark);
       font-size: 12px;
       font-weight: 800;
-      letter-spacing: 2px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 680px;
+      font-size: 64px;
+      line-height: 0.98;
+      letter-spacing: -3.2px;
+      color: #28313d;
+    }
+
+    .hero h1 span {
+      color: var(--accent-dark);
+    }
+
+    .abstract-label,
+    .section-label {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2.4px;
       text-transform: uppercase;
       margin-bottom: 18px;
     }
 
     .abstract {
-      font-size: 19px;
-      line-height: 1.75;
-      color: #675965;
-      max-width: 560px;
+      max-width: 620px;
+      margin-top: 34px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--muted);
     }
 
-    .info-panel {
+    .tags {
+      margin-top: 25px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.75);
+      color: #5b4858;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .profile-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(194, 58, 131, 0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .profile-top {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 22px;
+      padding: 28px;
+      border-bottom: 1px solid var(--line);
+      align-items: center;
+    }
+
+    .portrait {
+      width: 150px;
+      height: 150px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(194, 58, 131, 0.12), rgba(45, 93, 123, 0.08)),
+        #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-dark);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 800;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-title h2 {
+      margin: 0 0 10px;
+      font-size: 25px;
+      letter-spacing: -0.7px;
+      color: #28313d;
+    }
+
+    .profile-title p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border: 1px solid #ead2df;
-      border-radius: 10px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.84);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 12px 40px rgba(209, 77, 147, 0.08);
     }
 
     .info-box {
-      padding: 28px;
-      border-bottom: 1px solid #ead2df;
-      border-right: 1px solid #ead2df;
-      min-height: 110px;
+      min-height: 115px;
+      padding: 25px 28px;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
     }
 
     .info-box:nth-child(2),
@@ -124,126 +241,156 @@
     }
 
     .info-box h4 {
-      margin: 0 0 16px;
-      color: #d14d93;
+      margin: 0 0 14px;
+      color: var(--accent);
       font-size: 11px;
-      letter-spacing: 1.6px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
     }
 
     .info-box p {
       margin: 0;
-      color: #3b3340;
+      color: #303744;
       font-size: 15px;
-      font-weight: 700;
-      text-transform: uppercase;
       line-height: 1.5;
+      font-weight: 800;
+      text-transform: uppercase;
     }
 
-    .buttons {
-      margin-top: 22px;
+    .icon-row {
       display: flex;
       gap: 14px;
-      flex-wrap: wrap;
+      padding: 24px 28px 28px;
     }
 
-    .btn {
-      display: inline-block;
-      padding: 12px 16px;
-      border: 1px solid #e4bfd1;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.9);
-      color: #c93c86;
+    .icon-btn {
+      width: 46px;
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-dark);
       text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
 
-    .btn:hover {
-      background: #ffe7f3;
+    .icon-btn:hover {
+      transform: translateY(-3px);
+      background: #fff0f7;
+      border-color: #df9fc1;
+    }
+
+    .icon-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
     }
 
     .divider {
-      height: 1px;
-      background: #efd8e4;
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
     }
 
     section {
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 72px 28px;
+      padding: 76px 30px;
     }
 
     .section-title {
-      font-size: 34px;
-      margin: 0 0 18px;
-      color: #3b3340;
+      margin: 0 0 22px;
+      font-size: 38px;
+      letter-spacing: -1.3px;
+      color: #28313d;
     }
 
     .section-text {
-      max-width: 800px;
+      max-width: 860px;
+      color: var(--muted);
       font-size: 18px;
-      line-height: 1.8;
-      color: #675965;
+      line-height: 1.85;
+      margin: 0;
     }
 
     .cards {
+      margin-top: 34px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      margin-top: 34px;
     }
 
     .card {
-      background: rgba(255,255,255,0.86);
-      border: 1px solid #ead2df;
+      min-height: 275px;
       padding: 28px;
-      min-height: 240px;
-      border-radius: 10px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 16px 50px rgba(194, 58, 131, 0.07);
+      backdrop-filter: blur(10px);
     }
 
-    .card .num {
-      color: #d14d93;
+    .card-number {
+      margin-bottom: 22px;
+      color: var(--accent);
       font-size: 12px;
+      font-weight: 900;
       letter-spacing: 2px;
-      font-weight: 800;
-      margin-bottom: 20px;
+      text-transform: uppercase;
     }
 
     .card h3 {
-      margin: 0 0 14px;
-      font-size: 21px;
-      color: #3b3340;
+      margin: 0 0 15px;
+      font-size: 22px;
+      color: #28313d;
+      letter-spacing: -0.4px;
     }
 
     .card p {
       margin: 0;
-      color: #675965;
-      line-height: 1.7;
+      color: var(--muted);
       font-size: 16px;
+      line-height: 1.75;
     }
 
     .publication {
-      background: rgba(255,255,255,0.86);
-      border: 1px solid #ead2df;
-      border-radius: 10px;
-      padding: 24px;
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 26px;
       margin-top: 18px;
-      line-height: 1.7;
-      color: #675965;
+      color: var(--muted);
+      line-height: 1.75;
+      box-shadow: 0 16px 50px rgba(194, 58, 131, 0.06);
+    }
+
+    .publication strong {
+      color: #28313d;
+    }
+
+    .publication a {
+      color: var(--accent-dark);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .publication a:hover {
+      text-decoration: underline;
     }
 
     footer {
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 38px 28px;
-      color: #8d7684;
+      padding: 40px 30px;
+      color: #806e7a;
       font-size: 14px;
     }
 
-    @media (max-width: 850px) {
+    @media (max-width: 950px) {
       header {
         display: block;
       }
@@ -253,8 +400,10 @@
       }
 
       nav a {
+        margin-left: 0;
+        margin-right: 18px;
         display: inline-block;
-        margin: 0 14px 10px 0;
+        margin-bottom: 10px;
       }
 
       .hero {
@@ -263,10 +412,30 @@
       }
 
       .hero h1 {
-        font-size: 40px;
+        font-size: 46px;
       }
 
-      .info-panel {
+      .profile-top {
+        grid-template-columns: 1fr;
+      }
+
+      .portrait {
+        width: 170px;
+        height: 170px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero h1 {
+        font-size: 38px;
+        letter-spacing: -1.7px;
+      }
+
+      .info-grid {
         grid-template-columns: 1fr;
       }
 
@@ -275,11 +444,11 @@
       .info-box:nth-child(3),
       .info-box:nth-child(4) {
         border-right: none;
-        border-bottom: 1px solid #ead2df;
+        border-bottom: 1px solid var(--line);
       }
 
-      .cards {
-        grid-template-columns: 1fr;
+      .info-box:nth-child(4) {
+        border-bottom: none;
       }
     }
   </style>
@@ -301,23 +470,44 @@
 
   <main class="hero" id="home">
     <div>
+      <div class="eyebrow">Computational Biologist • Ph.D. in Bioinformatics</div>
+
       <h1>
-        Computational Drug Design<br>
-        Molecular Biology<br>
-        Bioinformatics<br>
-        Computational Biologist
+        AI-driven <span>drug discovery</span><br>
+        and molecular bioinformatics
       </h1>
 
-      <div class="label">Abstract</div>
       <p class="abstract">
         I am Romina Norouzi, Ph.D. in Bioinformatics. My work focuses on
         computational drug design, molecular biology, bioinformatics,
         cheminformatics, molecular generation, and AI-driven therapeutic discovery.
       </p>
+
+      <div class="tags">
+        <div class="tag">Computational Drug Design</div>
+        <div class="tag">Molecular Biology</div>
+        <div class="tag">Bioinformatics</div>
+        <div class="tag">Molecular Generation</div>
+      </div>
     </div>
 
-    <div>
-      <div class="info-panel">
+    <aside class="profile-card">
+      <div class="profile-top">
+        <div class="portrait">
+          <img src="profile.jpg" alt="Romina Norouzi" onerror="this.remove(); this.parentElement.innerHTML='Upload<br>profile.jpg<br>here';" />
+        </div>
+
+        <div class="profile-title">
+          <h2>Romina Norouzi</h2>
+          <p>
+            Bioinformatics researcher working at the intersection of
+            generative AI, cheminformatics, molecular biology, and
+            computational drug design.
+          </p>
+        </div>
+      </div>
+
+      <div class="info-grid">
         <div class="info-box">
           <h4>Location</h4>
           <p>Tehran, Iran</p>
@@ -339,58 +529,77 @@
         </div>
       </div>
 
-      <div class="buttons">
-        <a class="btn" href="https://scholar.google.com/citations?user=3Hrx_gcAAAAJ&hl=en" target="_blank">Google Scholar</a>
-        <a class="btn" href="https://github.com/RominaNorouzi2713" target="_blank">GitHub</a>
-        <a class="btn" href="#contact">Contact</a>
+      <div class="icon-row">
+        <a class="icon-btn" href="https://scholar.google.com/citations?user=3Hrx_gcAAAAJ&hl=en" target="_blank" aria-label="Google Scholar" title="Google Scholar">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3 1.8 9 12 15 22.2 9 12 3Zm0 13.2L5.4 12.3v3.4L12 19.6l6.6-3.9v-3.4L12 16.2Z"/>
+          </svg>
+        </a>
+
+        <a class="icon-btn" href="https://github.com/RominaNorouzi2713" target="_blank" aria-label="GitHub" title="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 .7A11.3 11.3 0 0 0 .7 12c0 5 3.2 9.2 7.6 10.7.6.1.8-.2.8-.6v-2.1c-3.1.7-3.8-1.3-3.8-1.3-.5-1.2-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.8 2.5 2.9 1.8.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.3-5.1-5.6 0-1.2.4-2.2 1.2-3-.1-.3-.5-1.5.1-3 0 0 .9-.3 3.1 1.2.9-.2 1.8-.4 2.8-.4s1.9.1 2.8.4c2.1-1.5 3.1-1.2 3.1-1.2.6 1.5.2 2.7.1 3 .7.8 1.2 1.8 1.2 3 0 4.3-2.6 5.3-5.1 5.6.4.4.8 1.1.8 2.2v3.2c0 .4.2.7.8.6A11.3 11.3 0 0 0 12 .7Z"/>
+          </svg>
+        </a>
+
+        <a class="icon-btn" href="mailto:romina.norouzi@ut.ac.ir" aria-label="Email" title="Email">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 5h18c.8 0 1.5.7 1.5 1.5v11c0 .8-.7 1.5-1.5 1.5H3c-.8 0-1.5-.7-1.5-1.5v-11C1.5 5.7 2.2 5 3 5Zm9 7.3L4.3 7.2v9.6h15.4V7.2L12 12.3Zm0-1.9L19 6.5H5l7 3.9Z"/>
+          </svg>
+        </a>
       </div>
-    </div>
+    </aside>
   </main>
 
   <div class="divider"></div>
 
   <section id="about">
-    <div class="label">About</div>
+    <div class="section-label">About</div>
     <h2 class="section-title">About Me</h2>
     <p class="section-text">
-      I am a computational biologist with a Ph.D. in Bioinformatics. My research
-      lies at the intersection of bioinformatics, molecular biology, computational
-      drug design, cheminformatics, and artificial intelligence. I am especially
-      interested in molecular generation and generative models for drug discovery.
+      I am a computational biologist with a Ph.D. in Bioinformatics. My academic
+      work connects bioinformatics, molecular biology, cheminformatics, deep
+      generative modeling, and computational drug design. My research focuses on
+      de novo molecule design for specific targets, molecular generation,
+      bioactivity-oriented modeling, and AI-driven methods for therapeutic
+      candidate discovery.
     </p>
   </section>
 
   <div class="divider"></div>
 
   <section id="research">
-    <div class="label">Scientific Dimensions</div>
+    <div class="section-label">Scientific Dimensions</div>
     <h2 class="section-title">Research Interests</h2>
 
     <div class="cards">
       <div class="card">
-        <div class="num">01 // COMPUTATIONAL DRUG DESIGN</div>
+        <div class="card-number">01 // Computational Drug Design</div>
         <h3>AI for Drug Discovery</h3>
         <p>
           Developing computational and AI-driven methods for rational drug design,
-          molecule optimization, and therapeutic candidate discovery.
+          molecule optimization, molecular docking, and therapeutic candidate
+          discovery.
         </p>
       </div>
 
       <div class="card">
-        <div class="num">02 // MOLECULAR BIOLOGY</div>
+        <div class="card-number">02 // Molecular Biology</div>
         <h3>Molecular & Biomedical Systems</h3>
         <p>
-          Studying molecular biology and biomedical mechanisms through computational
-          analysis, data integration, and predictive modeling.
+          Studying molecular and biomedical mechanisms using computational
+          analysis, cancer-related molecular biology, expression profiling,
+          and predictive modeling.
         </p>
       </div>
 
       <div class="card">
-        <div class="num">03 // BIOINFORMATICS</div>
+        <div class="card-number">03 // Bioinformatics</div>
         <h3>Bioinformatics & Molecular Generation</h3>
         <p>
-          Building bioinformatics and generative modeling frameworks for molecular
-          representation, molecule generation, and biomedical discovery.
+          Building bioinformatics and generative modeling frameworks for
+          molecular representation, target-specific molecule generation,
+          cheminformatics, and multiomics-driven discovery.
         </p>
       </div>
     </div>
@@ -399,36 +608,38 @@
   <div class="divider"></div>
 
   <section id="publications">
-    <div class="label">Publications</div>
+    <div class="section-label">Publications</div>
     <h2 class="section-title">Selected Publications</h2>
 
     <div class="publication">
-      <strong>MT-ConBiFormer-GPT: multi-target molecular generation for low-data drug discovery.</strong>
+      <strong>MT-ConBiFormer-GPT: multi-target molecular generation for low-data drug discovery via a contrastive BiFormer-GPT architecture and curriculum learning with cross-domain generalization.</strong>
       <br>
-      Add full author list, journal name, year, and link here.
+      Romina Norouzi, Karim Abbasi, Parvin Razzaghi, Sajjad Gharaghani.
+      <em>Briefings in Bioinformatics</em>, 2026.
+      <br>
+      <a href="https://academic.oup.com/bib/article/27/3/bbag079/8675953" target="_blank">View publication</a>
     </div>
 
     <div class="publication">
-      <strong>Additional publications and manuscripts.</strong>
+      <strong>In-silico and in-vitro evidence suggest LINC01405 as a sponge for miR-29b and miR-497-5p, and a potential regulator of Wnt, PI3K, and TGFB signaling pathways in breast carcinoma.</strong>
       <br>
-      Add your papers, reviews, conference articles, and ongoing research here.
+      Cancer Reports, 2024.
     </div>
   </section>
 
   <div class="divider"></div>
 
   <section id="contact">
-    <div class="label">Contact</div>
+    <div class="section-label">Contact</div>
     <h2 class="section-title">Contact</h2>
     <p class="section-text">
-      Email: add-your-email-here<br>
-      Google Scholar: Romina Norouzi<br>
-      GitHub: RominaNorouzi2713
+      For academic communication, collaboration, or research-related inquiries,
+      please contact me by email or visit my academic profiles using the icons above.
     </p>
   </section>
 
   <footer>
-    © 2026 Romina Norouzi — Ph.D. in Bioinformatics
+    © 2026 Romina Norouzi — Computational Drug Design, Molecular Biology & Bioinformatics
   </footer>
 
   <script>
@@ -438,47 +649,26 @@
     let width, height;
     let molecules = [];
 
+    function rand(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
     function resizeCanvas() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
       createMolecules();
     }
 
-    function rand(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-
-    function createHexagon(cx, cy, r, rotation = 0) {
+    function createPolygon(cx, cy, r, sides, rotation = 0) {
       const pts = [];
-      for (let i = 0; i < 6; i++) {
-        const a = rotation + (Math.PI * 2 * i) / 6;
+      for (let i = 0; i < sides; i++) {
+        const a = rotation + (Math.PI * 2 * i) / sides;
         pts.push({
           x: cx + Math.cos(a) * r,
           y: cy + Math.sin(a) * r
         });
       }
       return pts;
-    }
-
-    function createMolecule() {
-      return {
-        x: rand(0, width),
-        y: rand(0, height),
-        scale: rand(20, 42),
-        rotation: rand(0, Math.PI * 2),
-        driftX: rand(-0.12, 0.12),
-        driftY: rand(-0.08, 0.08),
-        spin: rand(-0.002, 0.002),
-        type: Math.floor(rand(0, 3))
-      };
-    }
-
-    function createMolecules() {
-      molecules = [];
-      const count = Math.max(14, Math.floor((width * height) / 100000));
-      for (let i = 0; i < count; i++) {
-        molecules.push(createMolecule());
-      }
     }
 
     function rotatePoint(px, py, cx, cy, angle) {
@@ -494,74 +684,159 @@
       return points.map(p => rotatePoint(p.x, p.y, cx, cy, angle));
     }
 
-    function drawBond(p1, p2, opacity = 0.22) {
+    function createMolecule() {
+      return {
+        x: rand(-100, width + 100),
+        y: rand(-100, height + 100),
+        scale: rand(22, 48),
+        rotation: rand(0, Math.PI * 2),
+        driftX: rand(-0.11, 0.11),
+        driftY: rand(-0.07, 0.07),
+        spin: rand(-0.0018, 0.0018),
+        type: Math.floor(rand(0, 5)),
+        alpha: rand(0.12, 0.28)
+      };
+    }
+
+    function createMolecules() {
+      molecules = [];
+      const count = Math.max(16, Math.floor((width * height) / 85000));
+      for (let i = 0; i < count; i++) {
+        molecules.push(createMolecule());
+      }
+    }
+
+    function drawBond(p1, p2, alpha = 0.18, widthLine = 1.3) {
       ctx.beginPath();
       ctx.moveTo(p1.x, p1.y);
       ctx.lineTo(p2.x, p2.y);
-      ctx.strokeStyle = `rgba(209, 77, 147, ${opacity})`;
-      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = `rgba(194, 58, 131, ${alpha})`;
+      ctx.lineWidth = widthLine;
       ctx.stroke();
     }
 
-    function drawAtom(p, r = 2.3, opacity = 0.32) {
+    function drawAtom(p, r = 2.5, alpha = 0.24) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(209, 77, 147, ${opacity})`;
+      ctx.fillStyle = `rgba(194, 58, 131, ${alpha})`;
       ctx.fill();
     }
 
-    function drawRing(points) {
+    function drawRing(points, alpha = 0.2) {
       for (let i = 0; i < points.length; i++) {
-        drawBond(points[i], points[(i + 1) % points.length], 0.23);
+        drawBond(points[i], points[(i + 1) % points.length], alpha);
       }
 
       for (const p of points) {
-        drawAtom(p);
+        drawAtom(p, 2.4, alpha + 0.08);
       }
+    }
+
+    function drawInnerAromaticLines(points, cx, cy, alpha = 0.11) {
+      for (let i = 0; i < points.length; i += 2) {
+        const p1 = {
+          x: points[i].x * 0.86 + cx * 0.14,
+          y: points[i].y * 0.86 + cy * 0.14
+        };
+
+        const p2 = {
+          x: points[(i + 1) % points.length].x * 0.86 + cx * 0.14,
+          y: points[(i + 1) % points.length].y * 0.86 + cy * 0.14
+        };
+
+        drawBond(p1, p2, alpha, 1);
+      }
+    }
+
+    function drawLabel(text, p, alpha = 0.22) {
+      ctx.font = "bold 10px Arial";
+      ctx.fillStyle = `rgba(45, 93, 123, ${alpha})`;
+      ctx.fillText(text, p.x + 5, p.y - 5);
     }
 
     function drawMolecule(m) {
       const cx = m.x;
       const cy = m.y;
       const r = m.scale;
+      const alpha = m.alpha;
 
-      let ring1 = createHexagon(cx, cy, r, 0);
-      ring1 = rotatePoints(ring1, cx, cy, m.rotation);
-      drawRing(ring1);
+      if (m.type === 0) {
+        let hex = createPolygon(cx, cy, r, 6, 0);
+        hex = rotatePoints(hex, cx, cy, m.rotation);
+        drawRing(hex, alpha);
+        drawInnerAromaticLines(hex, cx, cy, alpha * 0.65);
+      }
 
       if (m.type === 1) {
-        let ring2 = createHexagon(cx + r * 1.55, cy, r, 0);
-        ring2 = rotatePoints(ring2, cx, cy, m.rotation);
-        drawRing(ring2);
-        drawBond(ring1[0], ring2[3], 0.18);
-        drawBond(ring1[5], ring2[2], 0.18);
+        let hex = createPolygon(cx, cy, r, 6, 0);
+        let pent = createPolygon(cx + r * 1.45, cy, r * 0.82, 5, Math.PI / 5);
+
+        hex = rotatePoints(hex, cx, cy, m.rotation);
+        pent = rotatePoints(pent, cx, cy, m.rotation);
+
+        drawRing(hex, alpha);
+        drawRing(pent, alpha * 0.9);
+        drawBond(hex[0], pent[2], alpha * 0.8);
+        drawBond(hex[5], pent[3], alpha * 0.8);
+        drawLabel("N", pent[0], alpha + 0.06);
       }
 
       if (m.type === 2) {
-        const attach = ring1[1];
+        let hex1 = createPolygon(cx, cy, r, 6, 0);
+        let hex2 = createPolygon(cx + r * 1.52, cy, r, 6, 0);
 
+        hex1 = rotatePoints(hex1, cx, cy, m.rotation);
+        hex2 = rotatePoints(hex2, cx, cy, m.rotation);
+
+        drawRing(hex1, alpha);
+        drawRing(hex2, alpha * 0.85);
+        drawBond(hex1[0], hex2[3], alpha * 0.75);
+        drawBond(hex1[5], hex2[2], alpha * 0.75);
+      }
+
+      if (m.type === 3) {
+        let ring = createPolygon(cx, cy, r * 0.9, 5, Math.PI / 5);
+        ring = rotatePoints(ring, cx, cy, m.rotation);
+        drawRing(ring, alpha);
+
+        const attach = ring[1];
         const p2 = {
-          x: attach.x + Math.cos(m.rotation + Math.PI / 5) * r * 1.2,
-          y: attach.y + Math.sin(m.rotation + Math.PI / 5) * r * 1.2
+          x: attach.x + Math.cos(m.rotation + 0.25) * r * 1.15,
+          y: attach.y + Math.sin(m.rotation + 0.25) * r * 1.15
         };
-
         const p3 = {
-          x: p2.x + Math.cos(m.rotation - Math.PI / 8) * r,
-          y: p2.y + Math.sin(m.rotation - Math.PI / 8) * r
+          x: p2.x + Math.cos(m.rotation - 0.55) * r,
+          y: p2.y + Math.sin(m.rotation - 0.55) * r
         };
-
         const p4 = {
-          x: p3.x + Math.cos(m.rotation + Math.PI / 4) * r * 0.9,
-          y: p3.y + Math.sin(m.rotation + Math.PI / 4) * r * 0.9
+          x: p3.x + Math.cos(m.rotation + 0.65) * r * 0.9,
+          y: p3.y + Math.sin(m.rotation + 0.65) * r * 0.9
         };
 
-        drawBond(attach, p2, 0.22);
-        drawBond(p2, p3, 0.20);
-        drawBond(p3, p4, 0.18);
+        drawBond(attach, p2, alpha);
+        drawBond(p2, p3, alpha * 0.9);
+        drawBond(p3, p4, alpha * 0.8);
+        drawAtom(p2, 2.3, alpha + 0.07);
+        drawAtom(p3, 2.3, alpha + 0.07);
+        drawAtom(p4, 2.3, alpha + 0.07);
+        drawLabel("O", p4, alpha + 0.05);
+      }
 
-        drawAtom(p2, 2.1, 0.28);
-        drawAtom(p3, 2.1, 0.28);
-        drawAtom(p4, 2.1, 0.28);
+      if (m.type === 4) {
+        const pts = [];
+        for (let i = 0; i < 6; i++) {
+          const x = cx + (i - 2.5) * r * 0.45;
+          const y = cy + (i % 2 === 0 ? -1 : 1) * r * 0.25;
+          pts.push(rotatePoint(x, y, cx, cy, m.rotation));
+        }
+
+        for (let i = 0; i < pts.length - 1; i++) {
+          drawBond(pts[i], pts[i + 1], alpha);
+          drawAtom(pts[i], 2.3, alpha + 0.06);
+        }
+        drawAtom(pts[pts.length - 1], 2.3, alpha + 0.06);
+        drawLabel("NH", pts[1], alpha + 0.05);
+        drawLabel("O", pts[4], alpha + 0.05);
       }
     }
 
@@ -573,10 +848,10 @@
         m.y += m.driftY;
         m.rotation += m.spin;
 
-        if (m.x < -160) m.x = width + 160;
-        if (m.x > width + 160) m.x = -160;
-        if (m.y < -160) m.y = height + 160;
-        if (m.y > height + 160) m.y = -160;
+        if (m.x < -180) m.x = width + 180;
+        if (m.x > width + 180) m.x = -180;
+        if (m.y < -180) m.y = height + 180;
+        if (m.y > height + 180) m.y = -180;
 
         drawMolecule(m);
       }
