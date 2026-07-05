@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Romina Norouzi</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f0e8;
+      color: #121212;
+    }
+
+    header {
+      width: 100%;
+      padding: 28px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #d3cabc;
+      position: sticky;
+      top: 0;
+      background: #f4f0e8;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    nav a {
+      color: #121212;
+      text-decoration: none;
+      margin-left: 26px;
+      font-size: 15px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      min-height: 82vh;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 70px;
+      align-items: center;
+      padding: 80px 56px;
+    }
+
+    .big-title {
+      font-size: 88px;
+      line-height: 0.92;
+      letter-spacing: -4px;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .small-label {
+      font-size: 12px;
+      letter-spacing: 2.2px;
+      color: #6c665f;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .abstract {
+      font-size: 19px;
+      line-height: 1.8;
+      max-width: 580px;
+      margin-bottom: 46px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px 48px;
+    }
+
+    .info-item h4 {
+      margin: 0 0 8px 0;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: #6c665f;
+      text-transform: uppercase;
+    }
+
+    .info-item p {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    section {
+      padding: 80px 56px;
+      border-top: 1px solid #d3cabc;
+    }
+
+    section h2 {
+      font-size: 46px;
+      letter-spacing: -1.5px;
+      margin: 0 0 32px 0;
+    }
+
+    .about-text {
+      font-size: 19px;
+      line-height: 1.8;
+      max-width: 860px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+    }
+
+    .card {
+      background: #fffaf2;
+      border: 1px solid #d3cabc;
+      padding: 30px;
+      min-height: 230px;
+    }
+
+    .number {
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: #6c665f;
+      font-weight: 700;
+      margin-bottom: 26px;
+    }
+
+    .card h3 {
+      font-size: 24px;
+      margin: 0 0 16px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .pub-list {
+      max-width: 900px;
+    }
+
+    .pub {
+      padding: 22px 0;
+      border-bottom: 1px solid #d3cabc;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .contact-box {
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    footer {
+      padding: 34px 56px;
+      border-top: 1px solid #d3cabc;
+      color: #6c665f;
+      font-size: 14px;
+    }
+
+    @media (max-width: 850px) {
+      header {
+        padding: 22px;
+        display: block;
+      }
+
+      nav {
+        margin-top: 18px;
+      }
+
+      nav a {
+        margin-left: 0;
+        margin-right: 16px;
+        display: inline-block;
+        margin-bottom: 8px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 62px 22px;
+        gap: 40px;
+      }
+
+      .big-title {
+        font-size: 52px;
+        letter-spacing: -2px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 62px 22px;
+      }
+
+      section h2 {
+        font-size: 34px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        padding: 30px 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">Romina Norouzi</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="hero" id="home">
+    <div>
+      <h1 class="big-title">
+        RESEARCH<br>
+        SCIENCE<br>
+        DISCOVERY
+      </h1>
+    </div>
+
+    <div>
+      <div class="small-label">Abstract</div>
+      <p class="abstract">
+        I am Romina Norouzi. My academic interests focus on scientific research,
+        interdisciplinary discovery, and the development of ideas that connect
+        knowledge, innovation, and real-world impact.
+      </p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>Location</h4>
+          <p>Your City</p>
+        </div>
+
+        <div class="info-item">
+          <h4>Institute</h4>
+          <p>Your University</p>
+        </div>
+
+        <div class="info-item">
+          <h4>Focus</h4>
+          <p>Your Field</p>
+        </div>
+
+        <div class="info-item">
+          <h4>Specialization</h4>
+          <p>Your Topic</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section id="about">
+    <div class="small-label">About</div>
+    <h2>About Me</h2>
+    <p class="about-text">
+      Write your biography here. You can include your education, university,
+      research interests, academic background, work experience, and future goals.
+      This section should explain who you are and what kind of work you do.
+    </p>
+  </section>
+
+  <section id="research">
+    <div class="small-label">Research Dimensions</div>
+    <h2>Research Interests</h2>
+
+    <div class="cards">
+      <div class="card">
+        <div class="number">0 1 // RESEARCH</div>
+        <h3>Research Area One</h3>
+        <p>
+          Describe your first research area here. For example: artificial intelligence,
+          biology, pharmacology, law, public health, or another academic field.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="number">0 2 // SCIENCE</div>
+        <h3>Research Area Two</h3>
+        <p>
+          Describe your second research area here. Explain the questions, methods,
+          or topics that are important in your work.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="number">0 3 // PROJECTS</div>
+        <h3>Projects</h3>
+        <p>
+          Add your academic projects, professional work, software, publications,
+          or collaborations in this section.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="small-label">Publications</div>
+    <h2>Selected Publications</h2>
+
+    <div class="pub-list">
+      <div class="pub">
+        <strong>Paper Title One.</strong> Author names. Journal or conference name, year.
+      </div>
+
+      <div class="pub">
+        <strong>Paper Title Two.</strong> Author names. Journal or conference name, year.
+      </div>
+
+      <div class="pub">
+        <strong>Manuscript in Preparation.</strong> Short description of your current work.
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="small-label">Contact</div>
+    <h2>Contact</h2>
+
+    <div class="contact-box">
+      <p>Email: your-email@example.com</p>
+      <p>GitHub: RominaNorouzi2713</p>
+      <p>Google Scholar: Add your link here</p>
+      <p>LinkedIn: Add your link here</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Romina Norouzi
+  </footer>
+
+</body>
+</html>
